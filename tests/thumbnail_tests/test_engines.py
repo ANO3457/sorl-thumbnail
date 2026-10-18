@@ -231,6 +231,18 @@ class SimpleTestCase(BaseTestCase):
         img = Image.open(th.storage.path(th.name))
         self.assertFalse(self.is_transparent(img))
 
+    @unittest.skipIf(
+        settings.THUMBNAIL_CONVERT.startswith('gm ')
+        or 'pgmagick_engine' in settings.THUMBNAIL_ENGINE,
+        'GraphicsMagick has no AVIF encoder',
+    )
+    def test_avif_output(self):
+        im = ImageFile(Item.objects.get(image='500x500.jpg').image)
+        th = self.BACKEND.get_thumbnail(im, '100x100', format='AVIF')
+        img = Image.open(th.storage.path(th.name))
+        self.assertEqual(img.format, 'AVIF')
+        self.assertEqual(img.size, (100, 100))
+
     @unittest.skipIf('pil_engine' not in settings.THUMBNAIL_ENGINE, 'animation is only kept in PIL')
     def test_animated_gif(self):
         # A red square moving right over a transparent background

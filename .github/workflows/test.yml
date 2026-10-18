@@ -44,7 +44,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install lsof imagemagick libjpeg62 zlib1g-dev libavif-dev libheif-plugin-aomenc
+        sudo apt-get install imagemagick libjpeg62 zlib1g-dev libavif-dev libheif-plugin-aomenc
 
     - name: Install GraphicsMagick
       if: matrix.target == 'graphicsmagick'

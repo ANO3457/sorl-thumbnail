@@ -5,6 +5,8 @@ Changes
 Unreleased
 ==========
 
+* A project homepage with example galleries for each image engine, built from
+  ``demo/`` and published to https://mariocesar.github.io/sorl-thumbnail/
 * The PIL engine keeps animated GIFs animated when the thumbnail format is
   ``GIF``. Every frame is thumbnailed, keeping its duration and the loop
   count. Other formats still take the first frame (#687)

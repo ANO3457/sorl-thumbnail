@@ -89,6 +89,8 @@ class BaseTestCase(TestCase):
         self.BACKEND = get_module_class(settings.THUMBNAIL_BACKEND)()
         self.ENGINE = get_module_class(settings.THUMBNAIL_ENGINE)()
         self.KVSTORE = get_module_class(settings.THUMBNAIL_KVSTORE)()
+        # A shared Redis keeps keys between runs; start every test from an empty store
+        self.KVSTORE.clear()
 
         if not os.path.exists(settings.MEDIA_ROOT):
             os.makedirs(settings.MEDIA_ROOT)

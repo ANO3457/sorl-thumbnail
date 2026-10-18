@@ -29,7 +29,7 @@ WORKDIR /app
 COPY . /app/
 
 # Install tox with gh-actions plugin and Pillow for debug scripts
-RUN pip3 install --break-system-packages tox tox-gh-actions Pillow
+RUN pip3 install --break-system-packages tox tox-uv tox-gh-actions Pillow
 
 # Usage:
 # Build: docker build -f Dockerfile.test -t sorl-im6-test .

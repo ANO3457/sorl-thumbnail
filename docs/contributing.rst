@@ -15,7 +15,8 @@ for those who want to run tests locally, read on.
 Since sorl-thumbnail supports a variety of image backends, python and
 Django versions, we provide an easy way to test locally across all of them.
 We use `Docker`_ for consistent test environments and `tox`_ for managing
-python virtual environments.
+python virtual environments. tox creates them with `uv`_, which also downloads
+any Python version missing from your machine.
 
 Prerequisites
 -------------
@@ -46,6 +47,14 @@ For example:
 - ``pil`` = Pillow image library backend
 
 For a full list of tox environments, see ``tox.ini``
+
+Running tests without Docker
+----------------------------
+
+The ``pil`` environments need no system packages, so with `uv`_ installed you
+can run them directly::
+
+    uvx --with tox-uv tox -e py312-django52-pil
 
 Running specific tests
 ----------------------
@@ -84,6 +93,7 @@ Run all CI targets in sequence::
 .. _GitHub Actions: https://github.com/mariocesar/sorl-thumbnail/actions
 .. _Docker: https://www.docker.com/
 .. _tox: https://tox.wiki/
+.. _uv: https://docs.astral.sh/uv/
 .. _Install Docker: https://docs.docker.com/get-docker/
 
 Sending pull requests

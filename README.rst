@@ -35,9 +35,10 @@ join us in `GitHub Discussions`_.
 
 Tests
 -----
-The tests should run with tox. Running `tox` will run all tests for all environments.
-However, it is possible to run a certain environment with `tox -e <env>`, a list of all environments
-can be found with `tox -l`. These tests require the dependencies of the different engines defined in
+The tests run with tox, which uses `uv <https://docs.astral.sh/uv/>`_ to create its environments.
+With uv installed, `uvx --with tox-uv tox` will run all tests for all environments.
+However, it is possible to run a certain environment with `uvx --with tox-uv tox -e <env>`, a list of all environments
+can be found with `uvx --with tox-uv tox -l`. These tests require the dependencies of the different engines defined in
 the documentation. The easiest way to run tests is using Docker - see the `contributing documentation <https://sorl-thumbnail.readthedocs.io/en/latest/contributing.html#running-testsuite>`_
 for detailed instructions on running tests locally with Docker.
 

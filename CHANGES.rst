@@ -5,6 +5,10 @@ Changes
 Unreleased
 ==========
 
+* Documented ``THUMBNAIL_FORCE_OVERWRITE`` and stopped recommending it for
+  Amazon S3. On a key-value store miss it regenerates the thumbnail from the
+  full-size source where the default makes one ``HEAD`` request, so with boto3
+  it makes S3 slower, not faster (`#351 <https://github.com/mariocesar/sorl-thumbnail/issues/351>`__)
 * The convert engine now reports the padded size when ``padding=True``, so
   ``im.width`` and ``im.height`` match the file it wrote instead of the size
   before padding (`#835 <https://github.com/mariocesar/sorl-thumbnail/issues/835>`__)

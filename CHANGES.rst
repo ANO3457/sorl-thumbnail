@@ -5,6 +5,10 @@ Changes
 Unreleased
 ==========
 
+* The cached DB key-value store writes every entry with a single upsert
+  instead of a lookup followed by an insert or update, so creating a thumbnail
+  runs six statements instead of nine. Oracle has no upsert in Django and keeps
+  the two-step write (`#451 <https://github.com/mariocesar/sorl-thumbnail/issues/451>`__)
 * Documented ``THUMBNAIL_FORCE_OVERWRITE`` and stopped recommending it for
   Amazon S3. On a key-value store miss it regenerates the thumbnail from the
   full-size source where the default makes one ``HEAD`` request, so with boto3

@@ -45,6 +45,22 @@ class StorageTestCase(BaseStorageTestCase):
         storage = default.Storage()
         self.assertEqual(storage.__class__.__name__, "TestStorage")
 
+    @override_settings(
+        STORAGES={
+            "default": {
+                "BACKEND": "django.core.files.storage.FileSystemStorage",
+                "OPTIONS": {"base_url": "/custom_media/"},
+            }
+        }
+    )
+    def test_serialize_storage_with_short_backend_path(self):
+        from django.core.files.storage import storages
+
+        from sorl.thumbnail.images import ImageFile
+
+        img = ImageFile("test.jpg", storages["default"])
+        self.assertEqual(img.serialize_storage(), "default")
+
 
 class UrlStorageTestCase(unittest.TestCase):
     def test_encode_utf8_filenames(self):

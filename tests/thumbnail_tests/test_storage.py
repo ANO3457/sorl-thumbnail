@@ -55,11 +55,27 @@ class StorageTestCase(BaseStorageTestCase):
     )
     def test_serialize_storage_with_short_backend_path(self):
         from django.core.files.storage import storages
+        from django.utils.functional import empty
 
-        from sorl.thumbnail.images import ImageFile
+        from sorl.thumbnail.images import (
+            ImageFile,
+            deserialize_image_file,
+            get_or_create_storage,
+        )
+
+        # override_settings clears Django's storage instances on exit. Do not
+        # leave sorl's lazy default pointing to an instance from before it.
+        self.addCleanup(setattr, default.storage, "_wrapped", empty)
+        get_or_create_storage.cache_clear()
+        self.addCleanup(get_or_create_storage.cache_clear)
 
         img = ImageFile("test.jpg", storages["default"])
         self.assertEqual(img.serialize_storage(), "default")
+        img.set_size([10, 10])
+        restored = deserialize_image_file(img.serialize())
+        self.assertIs(restored.storage, storages["default"])
+        self.assertEqual(restored.storage.base_url, "/custom_media/")
+        self.assertEqual(restored.url, "/custom_media/test.jpg")
 
 
 class UrlStorageTestCase(unittest.TestCase):
